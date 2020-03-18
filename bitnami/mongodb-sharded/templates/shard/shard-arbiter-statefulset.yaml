@@ -184,6 +184,9 @@ spec:
               {{- include "mongodb-sharded.tplValue" ( dict "value" $.Values.shardsvr.arbiter.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
           resources: {{- toYaml $.Values.shardsvr.arbiter.resources | nindent 12 }}
+      {{- if $.Values.shardsvr.arbiter.priorityClassName }}
+      priorityClassName: {{ $.Values.shardsvr.arbiter.priorityClassName }}
+      {{- end}}
       volumes:
         {{- if or $.Values.shardsvr.arbiter.config $.Values.shardsvr.arbiter.configCM }}
         - name: config

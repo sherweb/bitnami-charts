@@ -253,6 +253,9 @@ spec:
           {{- end }}
           resources: {{ toYaml $.Values.metrics.resources | nindent 12 }}
         {{- end }}
+      {{- if $.Values.shardsvr.dataNode.priorityClassName }}
+      priorityClassName: {{ $.Values.shardsvr.dataNode.priorityClassName }}
+      {{- end}}
       volumes:
         - name: replicaset-entrypoint-configmap
           configMap:

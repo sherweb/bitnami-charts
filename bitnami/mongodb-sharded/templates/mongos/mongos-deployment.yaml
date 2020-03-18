@@ -259,6 +259,9 @@ spec:
           {{- end }}
           resources: {{- toYaml .Values.metrics.resources | nindent 12 }}
         {{- end }}
+      {{- if .Values.mongos.priorityClassName }}
+      priorityClassName: {{ .Values.mongos.priorityClassName }}
+      {{- end}}
       volumes:
         {{- if .Values.usePasswordFile }}
         - name: secrets
