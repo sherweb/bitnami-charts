@@ -189,6 +189,9 @@ spec:
               {{- include "mongodb-sharded.tplValue" ( dict "value" $.Values.shardsvr.dataNode.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
           resources: {{- toYaml $.Values.shardsvr.dataNode.resources | nindent 12 }}
+          {{- if $.Values.shardsvr.dataNode.sidecars }}
+            {{- toYaml $.Values.shardsvr.dataNode.sidecars | nindent 8  }}
+          {{- end }}
         {{- if $.Values.metrics.enabled }}
         - name: metrics
           image: {{ include "mongodb-sharded.metrics.image" $ }}
