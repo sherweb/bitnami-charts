@@ -137,7 +137,7 @@ The following table lists the configurable parameters of the Elasticsearch chart
 | `data.updateStrategy.type`                        | Update strategy for Data statefulset                                                                                                                      | `RollingUpdate`                                              |
 | `data.updateStrategy.rollingUpdatePartition`      | Partition update strategy for Data statefulset                                                                                                            | `nil`                                                        |
 | `data.heapSize`                                   | Data node heap size                                                                                                                                       | `1024m`                                                      |
-| `data.resources`                                  | CPU/Memory resource requests/limits for data nodes                                                                                                        | `requests: { cpu: "25m", memory: "1152Mi" }`                 |
+| `data.resources`                                  | CPU/Memory resource requests/limits for data nodes                                                                                                        | `requests: { cpu: "25m", memory: "2048Mi" }`                 |
 | `data.persistence.enabled`                        | Enable persistence using a `PersistentVolumeClaim`                                                                                                        | `true`                                                       |
 | `data.persistence.annotations`                    | Persistent Volume Claim annotations                                                                                                                       | `{}`                                                         |
 | `data.persistence.storageClass`                   | Persistent Volume Storage Class                                                                                                                           | ``                                                           |
@@ -478,6 +478,14 @@ As an alternative, this chart supports using an initContainer to change the owne
 You can enable this initContainer by setting `volumePermissions.enabled` to `true`.
 
 ## Notable changes
+
+### 12.0.0
+
+Several changes were introduced that breaks backwards compatibilty:
+
+- Ports names were prefixed with the protocol to comply with Istio (see https://istio.io/docs/ops/deployment/requirements/).
+- Labels are adapted to follow the Helm charts best practices.
+- Elasticsearch data pods are now deployed in parallel in order to bootstrap the cluster and be discovered.
 
 ### 11.0.0
 

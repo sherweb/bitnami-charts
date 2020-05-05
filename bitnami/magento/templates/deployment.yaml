@@ -13,6 +13,8 @@ spec:
     matchLabels:
       app: {{ template "magento.fullname" . }}
       release: "{{ .Release.Name }}"
+  strategy:
+    type: {{ .Values.updateStrategy }}
   template:
     metadata:
       labels:
@@ -160,7 +162,7 @@ spec:
         - name: metrics
           image: {{ template "magento.metrics.image" . }}
           imagePullPolicy: {{ .Values.metrics.image.pullPolicy | quote }}
-          command: ['/bin/apache_exporter', '-scrape_uri', 'http://status.localhost:80/server-status/?auto']
+          command: ['/bin/apache_exporter', '--scrape_uri', 'http://status.localhost:80/server-status/?auto']
           ports:
             - name: metrics
               containerPort: 9117

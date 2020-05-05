@@ -75,7 +75,7 @@ The following table lists the configurable parameters of the external-dns chart 
 | `aws.assumeRoleArn`                 | When using the AWS provider, assume role by specifying --aws-assume-role to the external-dns daemon      | `""`                                                        |
 | `aws.batchChangeSize`               | When using the AWS provider, set the maximum number of changes that will be applied in each batch        | `1000`                                                      |
 | `aws.zoneTags`                      | When using the AWS provider, filter for zones with these tags                                            | `[]`                                                        |
-| `aws.preferCNAME`                   | When using the AWS provider, replaces Alias recors with CNAME (options: true, false)                     | `[]`                                                        |
+| `aws.preferCNAME`                   | When using the AWS provider, replaces Alias records with CNAME (options: true, false)                     | `[]`                                                        |
 | `aws.evaluateTargetHealth`          | When using the AWS provider, sets the evaluate target health flag (options: true, false)                 | `[true, false]`                                             |
 | `azure.secretName`                  | When using the Azure provider, set the secret containing the `azure.json` file                           | `""`                                                        |
 | `azure.cloud`                       | When using the Azure provider, set the Azure Clound                                                      | `""`                                                        |
@@ -103,8 +103,8 @@ The following table lists the configurable parameters of the external-dns chart 
 | `designate.customCA.filename`       | When using the Designate provider, set the custom CA configuration filename                              | "designate-ca.pem"                                          |
 | `designate.customCAHostPath`        | When using the Designate provider, use a CA file already on the host to validate Openstack APIs.  This conflicts with `designate.customCA.enabled` | `none`            |
 | `designate.password`                | When using the Designate provider, specify the OpenStack authentication password. (optional)             | `none`                                                      |
-| `designate.projectName              | When using the Designate provider, specify the OpenStack project name. (optional)                        | `none`                                                      |
-| `designate.regionName               | When using the Designate provider, specify the OpenStack region name. (optional)                         | `none`                                                      |
+| `designate.projectName`              | When using the Designate provider, specify the OpenStack project name. (optional)                        | `none`                                                      |
+| `designate.regionName`               | When using the Designate provider, specify the OpenStack region name. (optional)                         | `none`                                                      |
 | `designate.userDomainName`          | When using the Designate provider, specify the OpenStack user domain name. (optional)                    | `none`                                                      |
 | `designate.username`                | When using the Designate provider, specify the OpenStack authentication username. (optional)             | `none`                                                      |
 | `digitalocean.apiToken`             | When using the DigitalOcean provider, `DO_TOKEN` to set (optional)                                       | `""`                                                        |
@@ -112,6 +112,9 @@ The following table lists the configurable parameters of the external-dns chart 
 | `google.serviceAccountSecret`       | When using the Google provider, specify the existing secret which contains credentials.json (optional)   | `""`                                                        |
 | `google.serviceAccountSecretKey`    | When using the Google provider with an existing secret, specify the key name (optional)                  | `"credentials.json"`                                        |
 | `google.serviceAccountKey`          | When using the Google provider, specify the service account key JSON file. (required when `google.serviceAccountSecret` is not provided. In this case a new secret will be created holding this service account | `""`    |
+| `ovh.consumerKey`                   | When using the OVH provider, specify the existing consumer key. (required when provider=ovh)             | `""`                                                        |
+| `ovh.applicationKey`                | When using the OVH provider with an existing application, specify the application key. (required when provider=ovh) | `""`                                                         |
+| `ovh.applicationSecret`             | When using the OVH provider with an existing application, specify the application secret. (required when provider=ovh) | `""`                                                        |
 | `infoblox.gridHost`                 | When using the Infoblox provider, specify the Infoblox Grid host (required when provider=infoblox)       | `""`                                                        |
 | `infoblox.wapiUsername`             | When using the Infoblox provider, specify the Infoblox WAPI username                                     | `"admin"`                                                   |
 | `infoblox.wapiPassword`             | When using the Infoblox provider, specify the Infoblox WAPI password (required when provider=infoblox)   | `""`                                                        |
@@ -133,6 +136,9 @@ The following table lists the configurable parameters of the external-dns chart 
 | `pdns.apiKey`                       | When using the PowerDNS provider, specify the API key of the server.                                     | `""`                                                        |
 | `transip.account`                   | When using the TransIP provider, specify the account name.                                               | `""`                                                        |
 | `transip.apiKey`                    | When using the TransIP provider, specify the API key to use.                                             | `""`                                                        |
+| `vinyldns.host`                     | When using the VinylDNS provider, specify the VinylDNS API host.                                         | `""`                                                        |
+| `vinyldns.accessKey`                | When using the VinylDNS provider, specify the Access Key to use.                                         | `""`                                                        |
+| `vinyldns.secretKey`                | When using the VinylDNS provider, specify the Secret key to use.                                         | `""`                                                        |
 | `annotationFilter`                  | Filter sources managed by external-dns via annotation using label selector (optional)                    | `""`                                                        |
 | `domainFilters`                     | Limit possible target zones by domain suffixes (optional)                                                | `[]`                                                        |
 | `zoneIdFilters`                     | Limit possible target zones by zone id (optional)                                                        | `[]`                                                        |
@@ -144,7 +150,6 @@ The following table lists the configurable parameters of the external-dns chart 
 | `logFormat`                         | Which format to output logs in (options: text, json)                                                     | `text`                                                      |
 | `interval`                          | Interval update period to use                                                                            | `1m`                                                        |
 | `triggerLoopOnEvent`                | When enabled, triggers run loop on create/update/delete events in addition to regular interval (optional)| `false`                                                     |
-| `istioIngressGateways`              | The fully-qualified name of the Istio ingress gateway services .                                         | `""`                                                        |
 | `policy`                            | Modify how DNS records are sychronized between sources and providers (options: sync, upsert-only )       | `upsert-only`                                               |
 | `registry`                          | Registry method to use (options: txt, noop)                                                              | `txt`                                                       |
 | `txtOwnerId`                        | When using the TXT registry, a name that identifies this instance of ExternalDNS (optional)              | `"default"`                                                 |
@@ -156,7 +161,7 @@ The following table lists the configurable parameters of the external-dns chart 
 | `nodeSelector`                      | Node labels for pod assignment (this value is evaluated as a template)                                   | `{}`                                                        |
 | `tolerations`                       | Tolerations for pod assignment (this value is evaluated as a template)                                   | `[]`                                                        |
 | `podAnnotations`                    | Additional annotations to apply to the pod.                                                              | `{}`                                                        |
-| `podLabels`                         | Additional labels to be added to pods                                                                    | {}                                                          |
+| `podLabels`                         | Additional labels to be added to pods                                                                    | `{}`                                                          |
 | `podSecurityContext.fsGroup`        | Group ID for the container                                                                               | `1001`                                                      |
 | `podSecurityContext.runAsUser`      | User ID for the container                                                                                | `1001`                                                      |
 | `priorityClassName`                 | priorityClassName                                                                                        | `""`                                                        |
@@ -170,7 +175,8 @@ The following table lists the configurable parameters of the external-dns chart 
 | `service.loadBalancerSourceRanges`  | List of IP CIDRs allowed access to load balancer (if supported)                                          | `[]`                                                        |
 | `service.annotations`               | Annotations to add to service                                                                            | `{}`                                                        |
 | `rbac.create`                       | Weather to create & use RBAC resources or not                                                            | `true`                                                      |
-| `rbac.serviceAccountName`           | ServiceAccount (ignored if rbac.create == true)                                                          | `default`                                                   |
+| `rbac.serviceAccountCreate`         | Determine whether a Service Account should be created or it should reuse a exiting one.                  | `true`                                                      |
+| `rbac.serviceAccountName`           | ServiceAccount to use. A name is generated using the external-dns.fullname template if it is not set     | `nil`                                                       |
 | `rbac.serviceAccountAnnotations`    | Additional Service Account annotations                                                                   | `{}`                                                        |
 | `rbac.apiVersion`                   | Version of the RBAC API                                                                                  | `v1beta1`                                                   |
 | `rbac.pspEnabled`                   | PodSecurityPolicy                                                                                        | `false`                                                     |

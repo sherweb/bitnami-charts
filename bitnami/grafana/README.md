@@ -63,6 +63,8 @@ The following tables lists the configurable parameters of the grafana chart and 
 | `replicaCount`                         | Number of replicas of the Grafana Pod                                                                  | `1`                                                     |
 | `updateStrategy`                       | Update strategy for deployment                                                                         | `{type: "RollingUpdate"}`                               |
 | `schedulerName`                        | Alternative scheduler                                                                                  | `nil`                                                   |
+| `serviceAccount.create`                | Specifies whether a ServiceAccount should be created                                                   | `true`                                                  |
+| `serviceAccount.name`                  | If serviceAccount.create is enabled, what should the serviceAccount name be - otherwise defaults to the fullname    | `nil`                                      |
 | `admin.user`                           | Grafana admin username                                                                                 | `admin`                                                 |
 | `admin.password`                       | Grafana admin password                                                                                 | Randomly generated                                      |
 | `admin.existingSecret`                 | Name of the existing secret containing admin password                                                  | `nil`                                                   |
@@ -109,6 +111,7 @@ The following tables lists the configurable parameters of the grafana chart and 
 | `service.nodePort`                     | Port to bind to for NodePort service type (client port)                                                | `nil`                                                   |
 | `service.annotations`                  | Annotations for Grafana service                                                                        | `{}`                                                    |
 | `service.loadBalancerIP`               | loadBalancerIP if Grafana service type is `LoadBalancer`                                               | `nil`                                                   |
+| `service.loadBalancerSourceRanges`     | loadBalancerSourceRanges if Grafana service type is `LoadBalancer`                                     | `nil`                                                   |
 | `ingress.enabled`                      | Enable the use of the ingress controller to access the web UI                                          | `false`                                                 |
 | `ingress.certManager`                  | Add annotations for cert-manager                                                                       | `false`                                                 |
 | `ingress.annotations`                  | Annotations for the Grafana Ingress                                                                    | `{}`                                                    |

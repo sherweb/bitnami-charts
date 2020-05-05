@@ -65,6 +65,8 @@ The following table lists the configurable parameters of the MinIO chart and the
 | `image.debug`                        | Specify if debug logs should be enabled                                                                                                                   | `false`                                                 |
 | `nameOverride`                       | String to partially override minio.fullname template with a string (will prepend the release name)                                                        | `nil`                                                   |
 | `fullnameOverride`                   | String to fully override minio.fullname template with a string                                                                                            | `nil`                                                   |
+| `serviceAccount.create`              | Specifies whether a ServiceAccount should be created                                                                                                      | `true`                                                  |
+| `serviceAccount.name`                | If serviceAccount.create is enabled, what should the serviceAccount name be - otherwise defaults to the fullname                                          | `nil`                                                   |
 | `clusterDomain`                      | Kubernetes cluster domain                                                                                                                                 | `cluster.local`                                         |
 | `clientImage.registry`               | MinIO Client image registry                                                                                                                               | `docker.io`                                             |
 | `clientImage.repository`             | MinIO Client image name                                                                                                                                   | `bitnami/minio-client`                                  |
@@ -134,6 +136,7 @@ The following table lists the configurable parameters of the MinIO chart and the
 | `ingress.secrets[0].key`             | TLS Secret Key                                                                                                                                            | `nil`                                                   |
 | `networkPolicy.enabled`              | Enable NetworkPolicy                                                                                                                                      | `false`                                                 |
 | `networkPolicy.allowExternal`        | Don't require client label for connections                                                                                                                | `true`                                                  |
+| `prometheusAuthType`                 | Authentication mode for Prometheus (`jwt` or `public`)                                                                                                    | `public`                                                |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
@@ -206,6 +209,12 @@ This chart includes a `values-production.yaml` file where you can find some para
 ```diff
 - networkPolicy.allowExternal: true
 + networkPolicy.allowExternal: false
+```
+
+- Change Prometheus authentication:
+```diff
+- prometheusAuthType: public
++ prometheusAuthType: jwt
 ```
 
 ### Distributed mode
